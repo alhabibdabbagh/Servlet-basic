@@ -10,12 +10,13 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-  
+  <!--  1 servlet isimi ve 2 hangi class ile ulasacagi 3 calistirma sirasi   -->
   <servlet>
   <servlet-name>GreetingServlet</servlet-name>
   <servlet-class>com.servlet.demo.GreetingServlet</servlet-class>
   <load-on-startup>1</load-on-startup> <!-- calistirmak icin  -->
   </servlet>
+  <!--  mapping servlet yayinlama icin   -->
   <servlet-mapping> 
   <servlet-name>GreetingServlet</servlet-name>
   <url-pattern>/greeting</url-pattern>   <!-- /greeting diyerek cagirliyor (browserden)  -->
