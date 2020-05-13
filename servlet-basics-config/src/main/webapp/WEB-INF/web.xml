@@ -22,6 +22,16 @@
   <url-pattern>/greeting</url-pattern>   <!-- /greeting diyerek cagirliyor (browserden)  -->
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>Empty</servlet-name>
+  <servlet-class>com.servlet.demo.annotion.Empty</servlet-class>
+  <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>Empty</servlet-name>
+  <url-pattern>/empty</url-pattern>
+  </servlet-mapping>
+  
   
   
   
