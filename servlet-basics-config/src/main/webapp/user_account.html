@@ -1,0 +1,20 @@
+<!doctype html>
+<head>
+<meta charset="UTF-8">
+<title>User Account</title>
+
+</head>
+<body>
+
+	<h3>User Account</h3>
+	<form id="userAccountCreate"    action="/servlet-basics-config/user/account" method="POST">
+		userName: <input type="text" name="username" /> <br>
+		email:     <input type="text" name="email" /> <br> 
+	    password: <input type="password" name="password" /> <br> 
+	              	<input type="hidden" name="x-api-key" value="t2" />
+			      <input type="submit" name="save" value="Save" />
+	</form>
+
+</body>
+
+</html>

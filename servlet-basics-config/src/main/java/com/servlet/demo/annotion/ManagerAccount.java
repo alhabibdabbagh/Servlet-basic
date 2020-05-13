@@ -1,10 +1,11 @@
 package com.servlet.demo.annotion;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +30,8 @@ public class ManagerAccount extends HttpServlet {
 	public void init() throws ServletException {
 		
 		userIdConuter=0;
-		users=Collections.synchronizedList(new ArrayList<User>());// collections sychronized
+		users=Collections.synchronizedList(new ArrayList<User>());// collections sychronized servlet multiThread calistigi icin 
+		// ve butun threadlar bu listeyi eklemek istedigi icin o yuzden Collections.synchronized
 		
 	}
 	
@@ -45,11 +47,37 @@ public class ManagerAccount extends HttpServlet {
 		loadUserAccountList(resp);
 		
 	}
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		User user=delete(req);
+		if(user!=null) {
+			resp.getWriter().println("<html>");
+			resp.getWriter().println("<head>");
+			resp.getWriter().println("user delete");
+			resp.getWriter().println("</head>");
+			resp.getWriter().println("<body>");
+			resp.getWriter().println("<h4>the user  a pain of id is delete"+user.getId());
+			resp.getWriter().println("</body>");
+			resp.getWriter().println("</html>");
+		}else {
+			resp.getWriter().println("<html>");
+			resp.getWriter().println("<head>");
+			resp.getWriter().println("user delete");
+			resp.getWriter().println("</head>");
+			resp.getWriter().println("<body>");
+			resp.getWriter().println("<h2>no user to delete");
+			resp.getWriter().println("</body>");
+			resp.getWriter().println("</html>");
+		}
+
+		
+	}
 	 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		
+		addUserFromHttpRequest(req);
+		resp.sendRedirect("../user_isOn.html");
 	}
 
 	private void loadUserAccountList(HttpServletResponse resp) throws IOException{
@@ -57,6 +85,32 @@ public class ManagerAccount extends HttpServlet {
 		resp.sendRedirect("../user_account.html");
 		
 	}
+	 private synchronized void addUserFromHttpRequest(HttpServletRequest req) {
+	String username=req.getParameter("username");
+	String email=req.getParameter("email");
+		 String password=req.getParameter("password");
+		 User user=new User(userIdConuter,username,email,password);
+		 userIdConuter++;
+		 users.add(user);
+	 }
+	 private synchronized User delete(HttpServletRequest req) {
+		 String username=req.getParameter("username");
+		 Iterator<User> userIterator=users.iterator();
+		 User user=null;
+		 boolean remove= false;
+		 while (userIterator.hasNext()) {
+			 user=userIterator.next();
+			 if(user.getUsername().equalsIgnoreCase(username)) {
+				 userIterator.remove();
+				 remove=true;
+				 break;
+			 } 
+		 }
+		 if (remove) {
+			 return user;
+		 }
+		return null;
+	 }
 	
 
 }
