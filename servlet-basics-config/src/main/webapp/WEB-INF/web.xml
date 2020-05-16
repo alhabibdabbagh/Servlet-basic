@@ -22,6 +22,15 @@
   <url-pattern>/greeting</url-pattern>   <!-- /greeting diyerek cagirliyor (browserden)  -->
   </servlet-mapping>
   
+<!--  <filter>  web tabanli ile filter tanimlama 
+  <filter-name> ServletFilter</filter-name>
+  <filter-class>com.servlet.demo.filtre.ServletFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  <filter-name> Filter</filter-name>
+  <url-pattern>/greeting</url-pattern>
+  </filter-mapping>
+ -->   
   <servlet>
   <servlet-name>Empty</servlet-name>
   <servlet-class>com.servlet.demo.annotion.Empty</servlet-class>
