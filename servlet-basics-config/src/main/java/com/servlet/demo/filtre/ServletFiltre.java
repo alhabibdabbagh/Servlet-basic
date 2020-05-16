@@ -16,48 +16,53 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
-
-@WebFilter(filterName="ServletFiltre",urlPatterns ="/greeting" )
+@WebFilter(filterName = "ServletFiltre", urlPatterns = "/greeting")
 public class ServletFiltre implements Filter {
 
 	List<String> ticket;
-	
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-	
-		ticket=Arrays.asList("habib","habib1");
+
+		ticket = Arrays.asList("habib", "habib1");
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
-		HttpServletRequest httpReq=(HttpServletRequest) request; // burda dikkat HttpServletRequest servletRequest degil 
-		HttpServletResponse httpResp=(HttpServletResponse) response;
-		
-		
-		String apiKey=httpReq.getHeader("x-api-key");
-		
-		
+
+		HttpServletRequest httpReq = (HttpServletRequest) request; // burda dikkat HttpServletRequest servletRequest
+																	// degil
+		HttpServletResponse httpResp = (HttpServletResponse) response;
+
+		String apiKey = httpReq.getHeader("x-api-key");
+		String method = httpReq.getMethod(); // request te hangi http ile oldu
+		if ("Get".contentEquals(method) && "/greeting".contentEquals(httpReq.getServletPath())) {// burda request hangi
+																									// tip ve servlet
+																									// path kontrol
+																									// etmis olduk
+
+		}
+
 		if (StringUtils.isBlank(apiKey)) {
+			httpResp.setStatus(401); // habgi hata verecegini setlemis olduk
 			httpResp.setContentType("text/plain;chartset=UTF-8");
 			httpResp.getWriter().println("set the api key ");
-			//return;
-			
-		}else if (!ticket.contains(apiKey)) {
+			// return;
+
+		} else if (!ticket.contains(apiKey)) {
 			httpResp.setContentType("text/plain;chartset=UTF-8");
 			httpResp.getWriter().println("the api key fail ");
-			//return;
-		}else {
+			// return;
+		} else {
 			chain.doFilter(httpReq, httpResp);
 		}
-		
-		
+
 	}
 
 	@Override
 	public void destroy() {
-		
+
 		ticket.clear();
 	}
 

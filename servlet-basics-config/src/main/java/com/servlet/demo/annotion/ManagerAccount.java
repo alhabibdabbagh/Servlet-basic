@@ -76,18 +76,18 @@ public class ManagerAccount extends HttpServlet {
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		User user= updateUserServlet(req); 
-		if (user!=null) {
+
+		User user = updateUserServlet(req);
+		if (user != null) {
 			resp.getWriter().println("<html>");
 			resp.getWriter().println("<head>");
 			resp.getWriter().println("the user is updatedd");
 			resp.getWriter().println("</head>");
 			resp.getWriter().println("<body>");
-			resp.getWriter().println("the user is been username " +user.getUsername());
+			resp.getWriter().println("the user is been username " + user.getUsername());
 			resp.getWriter().println("</body>");
 			resp.getWriter().println("</html>");
-		}else {
+		} else {
 			resp.getWriter().println("<html>");
 			resp.getWriter().println("<head>");
 			resp.getWriter().println("no update");
@@ -97,8 +97,7 @@ public class ManagerAccount extends HttpServlet {
 			resp.getWriter().println("</body>");
 			resp.getWriter().println("</html>");
 		}
-		
-		
+
 	}
 
 	@Override
@@ -141,28 +140,27 @@ public class ManagerAccount extends HttpServlet {
 		}
 		return null;
 	}
-	
+
 	private synchronized User updateUserServlet(HttpServletRequest req) {
-		
-		
-		String username=req.getParameter("username");
-		String email=req.getParameter("email");
-		String password=req.getParameter("password");
-		
-		int myIndex=-1;
-		int indexCounter=0;
-		Iterator<User> useriterator =users.iterator();
-		while(useriterator.hasNext()) {
-			User user=useriterator.next();
-			if(user.getUsername().equalsIgnoreCase(username)) {
-				myIndex=indexCounter;
+
+		String username = req.getParameter("username");
+		String email = req.getParameter("email");
+		String password = req.getParameter("password");
+
+		int myIndex = -1;
+		int indexCounter = 0;
+		Iterator<User> useriterator = users.iterator();
+		while (useriterator.hasNext()) {
+			User user = useriterator.next();
+			if (user.getUsername().equalsIgnoreCase(username)) {
+				myIndex = indexCounter;
 				break;
 			}
 			indexCounter++;
-			
+
 		}
-		if (myIndex>-1) {
-			User user=users.get(myIndex);
+		if (myIndex > -1) {
+			User user = users.get(myIndex);
 			user.setEmail(email);
 			user.setPassword(password);
 			user.setUsername(username);
@@ -170,8 +168,7 @@ public class ManagerAccount extends HttpServlet {
 			return user;
 		}
 		return null;
-		
-		
+
 	}
 
 }
